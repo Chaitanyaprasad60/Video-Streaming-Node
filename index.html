@@ -59,8 +59,27 @@
 
   <video controls>
     <!-- Replace 'your-backend-video-link' with the actual backend link to the video -->
-    <source src="http://localhost:3000/video" type="video/mp4">
+    <source id="myVideo" src="http://localhost:3000/video" type="video/mp4">
     Your browser does not support the video tag.
   </video>
+
+  
+  <script>
+    // Function to parse URL parameters
+    function getBackendVideoUrl() {
+      let url = window.location.href;
+      let backendUrl = url.split('?')[0];
+      let params = url.split('?')[1] || "defaultVideo";    
+      
+      return backendUrl+'video/'+params;
+    }
+  
+  
+    let videoElement = document.getElementById('myVideo');
+    var videoUrl = getBackendVideoUrl();; // Replace with the actual new video URL
+    videoElement.setAttribute('src', videoUrl);
+
+ 
+  </script>
 </body>
 </html>

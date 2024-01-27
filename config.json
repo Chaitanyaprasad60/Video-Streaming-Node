@@ -1,3 +1,4 @@
 {
-    "encrptyKey":"ChaitanyaPrasad"
+    "encrptyKey":"ChaitanyaPrasad",
+    "chunkSize":1000000
 }

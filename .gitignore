@@ -1,6 +1,5 @@
 # Avoid uploading videos to git
-.mp4
-/videos
+*.mp4
 
 # Logs
 logs
