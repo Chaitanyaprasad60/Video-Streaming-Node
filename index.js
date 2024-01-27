@@ -8,11 +8,13 @@ const app = express();
 const port = 3000;
 const chunkSize = config.chunkSize || 5 * 10 ** 5; //500KB // This is the size of video we want to send in one go. 
 
+// API - To load HTML page (Frontend)
 app.get("/", function (req, res) {
-    res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/index.html");
 });
 
 
+// API - For Stream the video
 app.get('/video/:filename', (req, res) => {
 
   let fileName = req.params.filename || "defaultVideo";
@@ -25,7 +27,7 @@ app.get('/video/:filename', (req, res) => {
   if (range) {
     const parts = range.replace(/bytes=/, "").split("-");
     const start = parseInt(parts[0], 10);
-    const end = parts[1] ? parseInt(parts[1], 10) : Math.min(start+chunkSize,fileSize - 1); //If end is not mention we decide the chunk size
+    const end = parts[1] ? parseInt(parts[1], 10) : Math.min(start + chunkSize, fileSize - 1); //If end is not mention we decide the chunk size
     //const chunkSize = (end - start) + 1;
     const file = fs.createReadStream(videoPath, { start, end });
     const head = {
@@ -49,23 +51,23 @@ app.get('/video/:filename', (req, res) => {
 });
 
 
-// Handle video upload
+// API - Handle video upload using multer
 app.post('/upload', uploadMiddleWare.single('video'), (req, res) => {
   const file = req.file;
   if (!file) {
     return res.status(400).send({
-      status:"error",
-      message:'No file uploaded.'
+      status: "error",
+      message: 'No file uploaded.'
     });
   }
-
-  // File has been uploaded, do any further processing if needed
   res.send({
-    status:"success",
-    message:`${config.backendUrl}?${req.body.fileName}`});
+    status: "success",
+    message: `${config.backendUrl}?${req.body.fileName}`
+  });
 });
 
 
+// Starting the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
