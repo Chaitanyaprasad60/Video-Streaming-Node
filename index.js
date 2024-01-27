@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const config = require('./config.json')
+const uploadMiddleWare = require('./fileUpload');
 
 const app = express();
 const port = 3000;
@@ -45,6 +46,23 @@ app.get('/video/:filename', (req, res) => {
     res.writeHead(200, head);
     fs.createReadStream(videoPath).pipe(res);
   }
+});
+
+
+// Handle video upload
+app.post('/upload', uploadMiddleWare.single('video'), (req, res) => {
+  const file = req.file;
+  if (!file) {
+    return res.status(400).send({
+      status:"error",
+      message:'No file uploaded.'
+    });
+  }
+
+  // File has been uploaded, do any further processing if needed
+  res.send({
+    status:"success",
+    message:`${config.backendUrl}?${req.body.fileName}`});
 });
 
 
