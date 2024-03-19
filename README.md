@@ -1,4 +1,4 @@
-# Web Based video player optimized for long videos by streaming through chunks
+# Web Based video player optimized for long videos by streaming in chunks
 You want to embed a video in your portfolio!! Here's the solution. Upload the video to this server and embed the link given by this server to your HTML page using &lt;iframe> tag.
 
 # UI Interface of the Video Player
